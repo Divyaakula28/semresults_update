@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Results</title>
+	<script type="text/javascript">
+		$('#downloadPDF').click(function () {
+    domtoimage.toPng(document.getElementById('MyTable'))
+        .then(function (blob) {
+            var pdf = new jsPDF('l', 'pt', [$('#MyTable').width(), $('#MyTable').height()]);
+
+            pdf.addImage(blob, 'PNG', 0, 0, $('#MyTable').width(), $('#MyTable').height());
+            pdf.save("test.pdf");
+
+            that.options.api.optionsChanged();
+        });
+});
+	</script>
+</head>
+<body>
+<button class="btn btn-info" id="downloadPDF">Download PDF</button>
+</body>
+</html>
+{% block body %}
+{% endblock %} 
