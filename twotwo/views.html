@@ -5,9 +5,9 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from django.http import HttpResponse
 
-xcel='three-tworesults.xlsx'
+xcel='four-one-results.xlsx'
 df=pd.read_excel(xcel)
-# Create your views here.
+
 def common(branches,Htno,Subcode,Subname,Grade,branchname):
 	k={}
 	c=0
@@ -81,8 +81,13 @@ def your_rank(Htno,bb,Grade,Credits,dicc):
 			return(c)
 
 def hii(req):
+	x=req.POST.get('message_frm')
+	print(x)
 	return render(req,'common.html')
 
+def sel_sem(req):
+	
+	return render(req,"select_sem.html")
 
 def Individual_Info(req):
 	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
@@ -102,17 +107,19 @@ def Individual_Info(req):
 						cre+=Credits[i]
 						grades=grades+(v*Credits[i])
 		if len(subn)==0:
-			return HttpResponse('go back .....Enter PIN number properly')	
+			return HttpResponse('<h1>go back .....Enter PIN number properly</h1>')	
 		else:				
 			rank=your_rank(Htno,hallticket,Grade,Credits,dicc)
 			ll1=[hallticket,credits,grades/cre,rank]
-			ll2=["hallticket number :"+str(hallticket),'over all credits :'+str(cre),'CGPA :' +str(grades/cre),'Rank :'+str(rank)]
+			ll2=["Hallticket number :"+str(hallticket),'Over all credits :'+str(cre),'CGPA :' +str(grades/cre),'Rank :'+str(rank)]
 			print(ll2)
 			return render(req,'pin1.html',{'subcode':subc,'subname':subn,'grades':gree,'credits':cree,'lst1':ll1,'lst2':ll2})
 	return render(req,'pin.html')
 
 def Branch_Det(req):
-	return render(req,'branch_com.html')	
+	req.session['branchname']=req.POST.get('lang')
+	bnch=req.POST.get('lang')
+	return render(req,'branch_com.html',{'bnch':bnch})	
 
 def Complete_Data(req):
 	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
@@ -135,58 +142,54 @@ def Complete_Data(req):
 	return render(req,'complete.html',{'ff':ff})
 
 def Branch_Details(req):
-	if req.method=='POST':
-		bb=req.POST.get('lang')
-		Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
-		f={}
-		for b,g in branches.items():
-			if bb==b:
-				for i in range(len(Htno)):
-					if str(Htno[i])[6:-2]==g and Htno[i]  in f :
-						f[Htno[i]]=f[Htno[i]]+call(Grade[i],Credits[i],dicc)
-					elif str(Htno[i])[6:-2]==g and Htno[i] not in f:
-						f[Htno[i]]=call(Grade[i],Credits[i],dicc)
-		f = dict( sorted(f.items(), key=operator.itemgetter(1),reverse=True))
-		c,H=0,0
+	bb=req.session['branchname']
+	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
+	f={}
+	for b,g in branches.items():
+		if bb==b:
+			for i in range(len(Htno)):
+				if str(Htno[i])[6:-2]==g and Htno[i]  in f :
+					f[Htno[i]]=f[Htno[i]]+call(Grade[i],Credits[i],dicc)
+				elif str(Htno[i])[6:-2]==g and Htno[i] not in f:
+					f[Htno[i]]=call(Grade[i],Credits[i],dicc)
+	f = dict( sorted(f.items(), key=operator.itemgetter(1),reverse=True))
+	c,H=0,0
 
-		cc,k,v,cg=[],[],[],[]
-		#print(f)
-		for i,j in f.items():
-			k.append(i)
-			v.append(j)
-			cg.append("{:.2f}".format(j/21))
-			if H!=j:
-				c=c+1
-				cc.append(c)
+	cc,k,v,cg=[],[],[],[]
+	#print(f)
+	for i,j in f.items():
+		k.append(i)
+		v.append("{:.2f}".format(j/22))
+		cg.append("{:.2f}".format(j/21))
+		if H!=j:
+			c=c+1
+			cc.append(c)
 
-				H=j
-			elif H==j:
-				cc.append(c)
-		#print(k[:10])			
-		return render(req,'list.html',{'k':k,'v':v,'rank':cc,'cg':cg})
-	return render(req,'topper.html')
+			H=j
+		elif H==j:
+			cc.append(c)
+	#print(k[:10])			
+	return render(req,'list.html',{'k':k,'v':v,'rank':cc,'cg':cg})
 
 
 
 def passper(req):
-	if req.method=="POST":
-		Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
-		branchname=req.POST.get('lang')
-		k=common(branches,Htno,Subcode,Subname,Grade,branchname)
-		req.session["llst"]=k
-		req.session["llst1"]=branchname
-		subnames=[]
-		for i,j in k.items():
-			subnames.append(j)
-		k='Yellow'
+	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
+	branchname=req.session['branchname']
+	k=common(branches,Htno,Subcode,Subname,Grade,branchname)
+	req.session["llst"]=k
+	req.session["llst1"]=branchname
+	subnames=[]
+	for i,j in k.items():
+		subnames.append(j)
+	k='Yellow'
 
-		return render(req,'sub_names.html',{'h':subnames,'k':k})
-	return render(req,'topper1.html')	
+	return render(req,'sub_names.html',{'h':subnames,'k':k,'bnch':branchname})
 subname1=''
 def yesorno(req):
 	req.session['subname1']=req.POST.get('hello')
-
-	return render(req,'selection.html')
+	subname=req.POST.get('hello')
+	return render(req,'selection.html',{'subname':subname})
 
 def passper1(req):
 	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
@@ -235,28 +238,25 @@ def sub_topper_list(req):
 			cc.append(c)
 		v.append(j[1])
 	return render(req,'sub_topper_list.html',{'k':k,'v':v,'rank':cc})
-	
-
 def bnchpass(req):
-	if req.method=="POST":
-		Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
-		branchname=req.POST.get('lang')
-		k=common(branches,Htno,Subcode,Subname,Grade,branchname)
-		mai=[]
-		for i,j in branches.items():
-			if i== branchname:
-				ht=j
-				break
-		t1=[]
+	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
+	branchname=req.session['branchname']
+	k=common(branches,Htno,Subcode,Subname,Grade,branchname)
+	mai=[]
+	for i,j in branches.items():
+		if i== branchname:
+			ht=j
+			break
+	t1=[]
 
-		for reg,j in k.items():
-			p=apf(Subcode,reg,Htno,ht,Grade)
-			mai.append(list(p))	
-			t1.append(reg)
-		print(mai)	
-		t2="ece"
-		return render(req,'branchpass.html',{'mai':mai,'t1':t1,'t2':t2})
-	return render(req,'topper2.html')	
-
+	for reg,j in k.items():
+		p=apf(Subcode,reg,Htno,ht,Grade)
+		mai.append(list(p))	
+		t1.append(reg)
+	print(mai)	
+	t2="ece"
+	return render(req,'branchpass.html',{'mai':mai,'t1':t1,'t2':t2})
 def home(req):
-	return render(req,'base.html')	
+	return render(req,'base.html')
+def branch_selection(req):
+	return render(req,'topper.html')	
