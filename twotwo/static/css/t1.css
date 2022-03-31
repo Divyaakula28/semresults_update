@@ -1,0 +1,16 @@
+.hello {
+  margin: auto;
+  width: 60%;
+  padding: 350% 0;
+  text-align: center;
+  top: center;
+}
+body{
+  background-image: url("/static/images/circle.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  flex-grow: 0.5;
+  left:50%;
+  top:50%;
+}
