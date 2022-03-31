@@ -1,0 +1,54 @@
+{%load static%}
+{% block body%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>RESULTS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css" href="#">
+</head>
+  <form action="{% url 'yesorno' %}" method="POST">
+            {% csrf_token %}
+<body>
+  <p><a href="http://127.0.0.1:8000/hii" class="btn btn-light" ><i class=" fa fa-home " style="font-size:48px;" ></i></a></p>
+
+<div class="centre">
+{% for i in h %} 
+      <label ><input type="radio" value="{{i}}" name="hello" checked>{{ i }}</label><br>
+{% endfor %}		
+{% ifequal k 'Yellow' %}
+<input type="submit" value="proceed">
+{% endifequal %} 
+</div>
+</body>
+<style>
+  .centre{
+	
+    background-color: lightgrey;
+    width: 400px;
+    border: 
+    5px solid green;
+    padding: 50px;
+    margin: 20px ;
+    margin-left: auto;
+    margin-right: auto;
+  
+
+  }
+  .centre{
+    margin:200px 0 0 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+</style>
+</html>
+{% endblock %}
+

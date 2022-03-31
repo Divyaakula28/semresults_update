@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>RESULTS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{%static 'css/start.css'%}">
+  
+</head>
+<body>
+  <div class="container">
+    <div><h2>Select One</h2></div><br>
+    <div id='one' class="col-md-3  col-sm-2"><a href="{% url 'Individual_Info' %}" class="btn btn-info btn-lg" role="button" name="hi" value="heelo">Individual Info</a></div>
+    <div id='two' class="col-md-3 col-sm-2" ><a href="{% url 'branch_selection' %}" class="btn btn-info btn-lg" role="button">Branch Details</a></div>
+    <div id='three' class="col-md-3 col-sm-2"><a href="{% url 'Complete_Data' %}" class="btn btn-info btn-lg" role="button">Complete Data</a></div>
+  </div>
+</body>
+
+<style type="text/css">
+
+
+
+</style>
+</html>

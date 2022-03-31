@@ -1,0 +1,69 @@
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>results 3-2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="{%static 'css/list3.css'%}">
+   <form action="{% url 'Branch_Details' %}" method="POST">
+            {% csrf_token %}
+</head>
+<body>
+  <div class="hello1">
+  <input type="text" id="mytabl" class="myInput" placeholder="Search PIN number HERE" onkeyup="searchFun()">
+</div>
+<table>
+  <th>pin number
+    {% for i in k %} 
+      {{i}}
+    {% endfor %}  
+z</th>
+  </table>  
+
+</body> 
+<script type="text/javascript">
+  var k={{k |safe}};
+  var v={{v |safe}};
+  var rank={{rank |safe}};
+  var cg={{cg|safe}};
+    
+  document.write("<table id=\"MyTable\" class=\"center\" style=\"color: #DC143C \"><tr><th>PIN Number</th><th>Total Grade</th><th>CGPA</th><th>RANK</th><th>Click Here")
+  for (var i=0;i<v.length;i++){
+    if(v[i]==0){
+      document.write("<tr class=\"content-table\" style=\"color: #DC143C\"><td >"+k[i]+"</td><td>"+v[i]+"</td><td>"+cg[i]+"</td><td>0</td><td onclick=\"location.href='http://127.0.0.1:8000/Individual_Info/'\" >For More</td></tr>");}  
+    else{ 
+      document.write("<tr class=\"content-table\" style=\"color: #6495ED\"><td >"+k[i]+"</td><td>"+v[i]+"</td><td>"+cg[i]+"<td>"+rank[i]+"</td><td><a onclick=\"location.href='http://127.0.0.1:8000/Individual_Info/'\" >For More</a></td></tr>");}
+    }
+  
+
+
+</script>
+<body>
+  <input type="button" id="btnExport" value="Export" onclick="Export()" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        function Export() {
+            html2canvas(document.getElementById('MyTable'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Table.pdf");
+                }
+            });
+        }
+    </script>
+
+</body>
+
+{% endblock%}
+</html>

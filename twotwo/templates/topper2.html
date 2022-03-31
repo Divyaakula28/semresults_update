@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>  
+<html>  
+<head> 
+  <title>RESULTS</title>          
+  <meta name = "viewport" content = "width = device-width, initial-scale = 0.1">
+   <link rel="stylesheet" type="text/css" href="#">
+   <form action="{% url 'bnchpass' %}" method="POST">
+            {% csrf_token %}
+</head> 
+<body>
+<div style="width:100%;height:100%">
+    <div class='center' style="#">
+     <form action="{% url 'bnchpass' %}" method="POST" >       
+      <label  >Select Branch: </label>
+      <select id="lang" name="lang" class="due" style="font-size:20px;">                  
+        <option value="ECE" selected="selected">ECE</option>
+        <option value="CSE">CSE</option>
+        <option value="MECH">MECH</option>
+        <option value="IT">IT</option>
+        <option value="EEE">EEE</option>
+        <option value="CIV">CIV</option>
+      </select>
+      <input type="submit" value="proceed">        
+     </form>  
+   </div>
+</div>
+</body> 
+
+<style>
+
+.center {
+position: absolute;
+top: 50%;
+left:50%;
+transform: translate(-50%, -50%);
+}
+body{
+  background-image: url("/static/images/circle.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  flex-grow: 0.5;
+  left:50%;
+  top:50%;
+}
+</style>
+
+    </html> 
+{% block body %}
+{% endblock %}  

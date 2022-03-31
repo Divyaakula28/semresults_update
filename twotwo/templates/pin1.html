@@ -1,0 +1,67 @@
+{% extends "pin.html" %}
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>RESULTS</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+	
+	 <link rel="stylesheet" type="text/css" href="{%static 'css/pin5.css'%}">
+	 <form action="{% url 'Individual_Info' %}" method="POST">
+            {% csrf_token %}
+
+<body>
+<script type="text/javascript">
+
+	var subcode={{subcode |safe}};
+	var subname={{subname |safe}};
+	var grades={{grades |safe}};
+	var credits={{credits |safe}};
+
+	var coll = document.getElementsByClassName("btn btn-info");
+	var j;
+	document.write("<table class=\"center\" style=\"color: #DC143C \"><tr><th>Subject_code</th><th>Subject_Name</th><th>Grades</th><th>Credits</th>")
+	for (var i=0;i<subcode.length;i++){
+		if(grades[i]=='F'){
+			document.write("<tr class=\"content-table\" style=\"color: #DC143C\"><td >"+subcode[i]+"</td><td>"+subname[i]+"</td><td>"+grades[i]+"</td><td>"+credits[i]+"</td></tr>");}
+		else if(grades[i]=='ABSENT'){
+			document.write("<tr class=\"content-table\" style=\"color: #000000\"><td >"+subcode[i]+"</td><td>"+subname[i]+"</td><td>"+grades[i]+"</td><td>"+credits[i]+"</td></tr>");}	
+		else{	
+			document.write("<tr class=\"content-table\" style=\"color: #6495ED\"><td >"+subcode[i]+"</td><td>"+subname[i]+"</td><td>"+grades[i]+"</td><td>"+credits[i]+"</td></tr>");}
+		}
+
+	
+	document.write("<table type=\"button\" class=\"btn1\" data-toggle=\"collapse\" data-target=\"#demo\"><tr><th>For More Details </th></tr>");
+</script>
+  <div id="demo" class="collapse">
+  	<div class="cont"><br>
+  	{% for i in lst2  %}
+  		{{i}} <br>
+  	{% endfor %}
+
+  </div>
+ </div> 
+</body>
+<style>{
+	.hello{
+		padding:5px;
+		position: relative;
+		left :90px;
+		top:10px;
+	  }
+	}
+</style>
+{% endblock%}
+</html>
+
+
+
+
+

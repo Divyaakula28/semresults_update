@@ -1,0 +1,162 @@
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>results 3-2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="{%static 'css/list3.css'%}">
+   <form action="{% url 'Branch_Details' %}" method="POST">
+            {% csrf_token %}
+</head>
+<body>
+  <div class="hello1 ">
+  <input type="text" id="myInput" placeholder="Search PIN number HERE" onkeyup="searchFun()">
+</div>
+
+</body> 
+<script type="text/javascript">
+  var k={{k |safe}};
+  var v={{v |safe}};
+  var rank={{rank |safe}};
+  var txt="click here";
+    
+  document.write("<table id=\"MyTable\" class=\"center col-xs-4\" style=\"color: #DC143C \"><tr><th>PIN Number</th><th>Total Grade</th><th>RANK")
+  for (var i=0;i<v.length;i++){
+    if(v[i]==0){
+      document.write("<tr class=\"content-table\" style=\"color: #DC143C\"><td >"+k[i]+"</td><td>"+v[i]+"</td><td>0</td></tr>");}  
+    else{ 
+      document.write("<tr class=\"content-table\" style=\"color: #6495ED\"><td >"+k[i]+"</td><td>"+v[i]+"</td><td>"+rank[i]+"</td></tr>");}
+    }
+
+ const searchFun=() =>{
+    let filter=document.getElementById('myInput').value.toUpperCase();
+    let myTable=document.getElementById('MyTable');
+    let tr=myTable.getElementsByTagName('tr');
+    for (var j=0; j<tr.length; j++){
+      let td=tr[j].getElementsByTagName('td')[0];
+
+      if (td){
+        let textvalue=td.textContent || td.innerHTML;
+        if(textvalue.indexOf(filter)> -1){
+          tr[j].style.display='';
+        }
+        else{
+          tr[j].style.display='NONE';
+        }
+      }
+    }
+
+  }
+  
+
+
+</script>
+<body>
+
+</body>
+<style>
+  * {
+    font-family: sans-serif; /* Change your font family */
+  }
+  
+  
+  .center {
+    border-collapse: collapse;
+    margin: 10px 0;
+    margin-left:auto; 
+    margin-right:auto;
+    font-size: 0.9em;
+    min-width: 400px;
+    max-height: 200px;
+    overflow: auto;
+    border-radius: 5px 5px 0 0;
+    scroll-padding-bottom: auto;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top:25px;
+    left: 30%;
+    margin:30px 0px 0px 0px;
+  }
+  
+  .center tr th {
+  
+    background-color: #009879;
+    color: #ffffff;
+    border-right: 1px solid #009879;
+    border-left: 1px solid #f3f3f3;  
+    text-align:center;
+    padding: 15px 15px;
+    font-weight: bold;
+    
+  }
+  
+  .content-table  td {
+    border-bottom: 1px solid #dddddd;
+    padding: 12px 15px;
+    font-size: 15px;
+  }
+  
+  .content-table td:nth-of-type(even) {
+    background-color: #f3f3f3;
+    font-size: 15px;
+  }
+  
+  .content-table  td { 
+    border-bottom: 2px solid #009879;
+    border-right: 1px solid #009879; 
+  }
+  .container {
+    justify-content: space-between;
+    flex-direction: column;
+    display: flex;
+  }
+  .container .btn-holder {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    justify-content: flex-end;
+    display: flex;
+  }
+  
+  .hello {
+    margin: 10px 10px 10px 10px;
+    margin-left:70%; 
+    margin-right:100%; 
+    font-size: 0.9em;
+    min-width: 100px;
+    position: absolute;
+    top:3px;
+    right:100%;
+  
+  }
+  .hello1 {
+    margin: 10px 10px 10px 10px;
+    margin-left:35%; 
+    margin-right:100%; 
+    font-size: 0.9em;
+    min-width: 100px;
+    position: absolute;
+    top:3px;
+  
+  }
+  #myInput{
+    font-size:20px;
+  }
+  @media all and (max-width:768px){
+    .center,#myInput{
+      left:20%;
+    }
+    #myInput{
+      left:20%;
+    }
+    
+  }
+</style>  
+
+{% endblock%}
+</html>

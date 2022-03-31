@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>RESULTS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{%static 'css/start.css'%}">
+  <form action="{% url 'hii' %}" method="POST">
+    {% csrf_token %}
+  
+</head>
+<body>
+  
+
+
+  <div class="container">
+    <div><h2>Select One</h2></div><br>
+    <div  id='one'><input type="submit" value="Reply" name ="message_frm"></div>
+    <div  id='two'><input type="submit" value="Reply" name ="message_frm"></div>
+    
+
+  </div>
+</body>
+
+<style type="text/css">
+  .container {
+    margin: auto;
+    background-color: #ffffff;
+    width: 50%;
+    padding: 10px;
+    position: relative;
+    left: 30px;
+    bottom: 50px;
+    top: 200px;
+  }
+  
+  @media all and (max-width: 992px) {
+    #two,#three {
+      padding-top: 20px;
+    }
+  }
+  
+  input{
+    background-color: #ffffff;
+    color: #000;
+    width:50vh;
+    font-size:2em;
+  }
+  #two{
+    padding-top:20px;
+  }
+
+
+
+</style>
+</html>
