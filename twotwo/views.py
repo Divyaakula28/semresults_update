@@ -5,9 +5,9 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from django.http import HttpResponse
 
-xcel='three-tworesults.xlsx'
+xcel='four-one-results.xlsx'
 df=pd.read_excel(xcel)
-# Create your views here.
+
 def common(branches,Htno,Subcode,Subname,Grade,branchname):
 	k={}
 	c=0
@@ -81,8 +81,13 @@ def your_rank(Htno,bb,Grade,Credits,dicc):
 			return(c)
 
 def hii(req):
+	x=req.POST.get('message_frm')
+	print(x)
 	return render(req,'common.html')
 
+def sel_sem(req):
+	
+	return render(req,"select_sem.html")
 
 def Individual_Info(req):
 	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
@@ -102,18 +107,19 @@ def Individual_Info(req):
 						cre+=Credits[i]
 						grades=grades+(v*Credits[i])
 		if len(subn)==0:
-			return HttpResponse('go back .....Enter PIN number properly')	
+			return HttpResponse('<h1>go back .....Enter PIN number properly</h1>')	
 		else:				
 			rank=your_rank(Htno,hallticket,Grade,Credits,dicc)
 			ll1=[hallticket,credits,grades/cre,rank]
-			ll2=["hallticket number :"+str(hallticket),'over all credits :'+str(cre),'CGPA :' +str(grades/cre),'Rank :'+str(rank)]
+			ll2=["Hallticket number :"+str(hallticket),'Over all credits :'+str(cre),'CGPA :' +str(grades/cre),'Rank :'+str(rank)]
 			print(ll2)
 			return render(req,'pin1.html',{'subcode':subc,'subname':subn,'grades':gree,'credits':cree,'lst1':ll1,'lst2':ll2})
 	return render(req,'pin.html')
 
 def Branch_Det(req):
 	req.session['branchname']=req.POST.get('lang')
-	return render(req,'branch_com.html')	
+	bnch=req.POST.get('lang')
+	return render(req,'branch_com.html',{'bnch':bnch})	
 
 def Complete_Data(req):
 	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
@@ -153,7 +159,7 @@ def Branch_Details(req):
 	#print(f)
 	for i,j in f.items():
 		k.append(i)
-		v.append(j)
+		v.append("{:.2f}".format(j/22))
 		cg.append("{:.2f}".format(j/21))
 		if H!=j:
 			c=c+1
@@ -178,12 +184,12 @@ def passper(req):
 		subnames.append(j)
 	k='Yellow'
 
-	return render(req,'sub_names.html',{'h':subnames,'k':k})
+	return render(req,'sub_names.html',{'h':subnames,'k':k,'bnch':branchname})
 subname1=''
 def yesorno(req):
 	req.session['subname1']=req.POST.get('hello')
-
-	return render(req,'selection.html')
+	subname=req.POST.get('hello')
+	return render(req,'selection.html',{'subname':subname})
 
 def passper1(req):
 	Subcode,Subname,Grade,Credits,branches,dicc,Htno=hello(df)
