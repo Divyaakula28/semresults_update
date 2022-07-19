@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 from django.http import HttpResponse
 
-xcel='four-one-results.xlsx'
+xcel='4-2.xlsx'
 df=pd.read_excel(xcel)
 
 def common(branches,Htno,Subcode,Subname,Grade,branchname):
