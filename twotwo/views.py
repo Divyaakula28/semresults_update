@@ -32,12 +32,10 @@ def hello(df):
 	dicc={'O':10,'S':9,'A':8,'B':7,'C':6,'D':5,'F':0,'ABSENT':0,'COMPLETED':0}
 	return(Subcode,Subname,Grade,Credits,branches,dicc,Htno)
 
-def call(Grade,Credits,dicc,Subname):
+def call(Grade,Credits,dicc):
 	for i,j in dicc.items():
 		if Grade==i:
 			ff=(j*Credits)
-		elif Grade==i and (Subname=='SEMINAR' or Subname=='SEMINAR ON INTERNSHIP PROJECT'):
-			ff=(j*2)
 		else:
 			continue
 	return(ff)		
@@ -161,7 +159,7 @@ def Branch_Details(req):
 	#print(f)
 	for i,j in f.items():
 		k.append(i)
-		v.append("{:.2f}".format(j/22))
+		v.append("{:.2f}".format(j/24))
 		cg.append("{:.2f}".format(j/21))
 		if H!=j:
 			c=c+1
